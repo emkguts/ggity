@@ -15,7 +15,7 @@ defmodule GGity.Stat do
       data
       |> Explorer.DataFrame.group_by(discrete_variables)
       |> Explorer.DataFrame.summarise_with(&[count: Explorer.Series.count(&1[mapping[:x]])])
-      |> Explorer.DataFrame.arrange_with(& &1[mapping[:x]])
+      |> Explorer.DataFrame.sort_with(& &1[mapping[:x]])
 
     mapping = Map.put(mapping, :y, "count")
     {stat, mapping}

@@ -454,7 +454,7 @@ defmodule GGityPlotTest do
 
     test "sets the shape scale on the plot geom", %{plot: plot} do
       plot = Plot.scale_shape(plot)
-      assert %Scale.Shape{} = plot.scales.shape()
+      assert %Scale.Shape{} = plot.scales.shape
     end
 
     test "labels legend breaks using custom function", %{plot: plot} do
@@ -481,7 +481,7 @@ defmodule GGityPlotTest do
         |> Plot.geom_point()
         |> Plot.scale_size()
 
-      assert %Scale.Size{} = plot.scales.size()
+      assert %Scale.Size{} = plot.scales.size
     end
   end
 
@@ -498,7 +498,7 @@ defmodule GGityPlotTest do
         |> Plot.geom_point()
         |> Plot.scale_size_identity()
 
-      assert %Scale.Identity{} = plot.scales.size()
+      assert %Scale.Identity{} = plot.scales.size
     end
   end
 
@@ -729,6 +729,8 @@ defmodule GGityPlotTest do
   end
 
   describe "guides/2" do
+    # This test is passing, but the outputted graph is not correct.
+    # The legend for color is not showing, even though the xpath exists.
     test "sets the legends for the specified scales", %{
       data: data,
       mapping: mapping
@@ -737,6 +739,7 @@ defmodule GGityPlotTest do
         data
         |> Plot.new(mapping)
         |> Plot.geom_point(%{color: :c, size: :c})
+        |> Plot.scale_size()
 
       # Unfortunately need to test output, because scales for
       # different layers are not consolidated until the plot is rendered

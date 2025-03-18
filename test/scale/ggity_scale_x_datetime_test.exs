@@ -33,8 +33,12 @@ defmodule GGityScaleXDateTimeTest do
     end
 
     test "raises with non-date time values" do
-      min_max = {1, 4}
-      assert_raise FunctionClauseError, fn -> X.DateTime.train(X.DateTime.new(), min_max) end
+      # Use function to create values to avoid static type checking, which was producing warnings
+      invalid_min_max = fn -> {1, 4} end
+
+      assert_raise FunctionClauseError, fn ->
+        X.DateTime.train(X.DateTime.new(), invalid_min_max.())
+      end
     end
   end
 end
